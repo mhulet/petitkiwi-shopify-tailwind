@@ -1,0 +1,127 @@
+{%- comment -%}
+  Petit Kiwi — Cart Page (TailwindUI shopping cart)
+{%- endcomment -%}
+
+<section class="section-padding bg-cream">
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-display text-brown mb-8">Votre panier</h1>
+
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post">
+        <ul class="divide-y divide-brown-200/30">
+          {%- for item in cart.items -%}
+            <li class="flex gap-x-4 sm:gap-x-6 py-6">
+              {%- comment -%} Product image {%- endcomment -%}
+              <a href="{{ item.url }}" class="flex-shrink-0">
+                {%- if item.image -%}
+                  <img
+                    src="{{ item.image | image_url: width: 200 }}"
+                    alt="{{ item.image.alt | default: item.product.title }}"
+                    class="h-24 w-24 sm:h-32 sm:w-32 rounded-xl object-cover bg-white"
+                    width="200"
+                    height="200"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  <div class="h-24 w-24 sm:h-32 sm:w-32 rounded-xl bg-cream-300 flex items-center justify-center">
+                    <span class="text-3xl">🥝</span>
+                  </div>
+                {%- endif -%}
+              </a>
+
+              {%- comment -%} Product info {%- endcomment -%}
+              <div class="flex flex-1 flex-col justify-between">
+                <div class="flex justify-between">
+                  <div>
+                    <h3 class="text-sm font-medium text-brown-700">
+                      <a href="{{ item.url }}" class="hover:text-kiwi-600 transition-colors">{{ item.product.title }}</a>
+                    </h3>
+                    {%- unless item.product.has_only_default_variant -%}
+                      <p class="mt-1 text-xs text-brown-400">{{ item.variant.title }}</p>
+                    {%- endunless -%}
+                    {%- if item.product.vendor != blank -%}
+                      <p class="mt-0.5 text-xs text-kiwi-600">{{ item.product.vendor }}</p>
+                    {%- endif -%}
+                  </div>
+                  <p class="text-sm font-bold text-brown">{{ item.final_line_price | money }}</p>
+                </div>
+
+                <div class="mt-3 flex items-center justify-between">
+                  {%- comment -%} Quantity {%- endcomment -%}
+                  <div class="inline-flex items-center rounded-full border border-brown-200 bg-white">
+                    <button type="button" class="px-2.5 py-1 text-brown-400 hover:text-brown-700"
+                            onclick="
+                              var q = this.nextElementSibling;
+                              q.value = Math.max(0, parseInt(q.value) - 1);
+                              q.form.submit();
+                            ">
+                      <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
+                      </svg>
+                    </button>
+                    <input type="number" name="updates[{{ item.key }}]" value="{{ item.quantity }}" min="0"
+                           class="w-10 text-center border-0 text-xs font-medium text-brown-700 focus:ring-0 bg-transparent">
+                    <button type="button" class="px-2.5 py-1 text-brown-400 hover:text-brown-700"
+                            onclick="
+                              var q = this.previousElementSibling;
+                              q.value = parseInt(q.value) + 1;
+                              q.form.submit();
+                            ">
+                      <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {%- comment -%} Remove {%- endcomment -%}
+                  <a href="{{ item.url_to_remove }}" class="text-xs text-brown-400 hover:text-terra transition-colors underline">
+                    Supprimer
+                  </a>
+                </div>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        {%- comment -%} Cart footer {%- endcomment -%}
+        <div class="border-t border-brown-200/30 pt-8 mt-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm text-brown-500">Sous-total</span>
+            <span class="text-lg font-bold text-brown">{{ cart.total_price | money }}</span>
+          </div>
+          <p class="text-xs text-brown-400 mb-6">Frais de livraison calcul&eacute;s &agrave; l'&eacute;tape suivante.</p>
+
+          <div class="flex flex-col gap-3">
+            <button type="submit" name="checkout" class="btn-primary w-full text-base py-4">
+              Passer la commande
+            </button>
+            <button type="submit" class="btn-secondary w-full text-base py-4">
+              Mettre &agrave; jour le panier
+            </button>
+            <a href="/collections" class="text-center text-sm text-brown-400 hover:text-kiwi-600 transition-colors">
+              &larr; Continuer mes achats
+            </a>
+          </div>
+        </div>
+      </form>
+    {%- else -%}
+      <div class="text-center py-16">
+        <div class="mx-auto w-20 h-20 rounded-full bg-kiwi/10 flex items-center justify-center mb-6">
+          <svg class="h-10 w-10 text-kiwi-400" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+          </svg>
+        </div>
+        <h2 class="text-xl font-display text-brown">Votre panier est vide</h2>
+        <p class="mt-2 text-sm text-brown-400">D&eacute;couvrez nos p&eacute;pites et trouvez votre bonheur !</p>
+        <a href="/collections" class="mt-6 btn-primary inline-flex">D&eacute;couvrir la boutique</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page panier",
+  "settings": []
+}
+{% endschema %}
