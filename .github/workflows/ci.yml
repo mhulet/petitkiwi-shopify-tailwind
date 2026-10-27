@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
       # shopify/theme-check-action plante sur le nouveau format JSON de la CLI : on appelle la CLI directement
       - name: Theme Check
-        run: npx --yes @shopify/cli@latest theme check --fail-level error
+        run: npx --yes @shopify/cli@5 theme check --fail-level error
