@@ -12,7 +12,7 @@ jobs:
         with:
           input: assets/app-tailwind.css
           output: assets/app.css
-          params: ""
+          params: "--minify"
       - name: Commit & Push
         run: |
           git add --force assets/app.css

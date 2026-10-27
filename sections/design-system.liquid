@@ -1,0 +1,200 @@
+{%- comment -%}
+  Petit Kiwi — Design System (aperçu vivant)
+  Affiche les tokens et les composants définis dans assets/app-tailwind.css.
+  Utilisation : créer une page masquée et lui attribuer le modèle « page.design-system ».
+  Documentation : docs/design-system.md
+{%- endcomment -%}
+
+{%- liquid
+  assign palettes = 'kiwi,leaf,lagoon,raspberry,sun,sky,cream,ink' | split: ','
+  assign steps = '50,100,200,300,400,500,600,700,800,900' | split: ','
+  assign cream_steps = '50,100,200,300,400' | split: ','
+  assign ink_steps = '50,100,200,300,400,500,600,700,800,900,950' | split: ','
+  assign roles = 'page,surface,surface-alt,ink,heading,muted,subtle,line,brand,brand-strong,brand-soft,action,cta,link,price,accent,highlight' | split: ','
+-%}
+
+<section class="section-padding bg-page">
+  <div class="mx-auto max-w-page px-4 sm:px-6 lg:px-8 space-y-16">
+    <header class="max-w-reading">
+      <p class="text-sm font-semibold uppercase tracking-wider text-brand-strong">Petit Kiwi</p>
+      <h1 class="mt-2 text-5xl">Design System</h1>
+      <p class="mt-4 text-lg text-muted">
+        Les couleurs, typographies et composants du thème. Ils sont définis une seule fois dans
+        <code class="rounded-chip bg-surface-alt px-1.5 py-0.5 text-sm">assets/app-tailwind.css</code>.
+      </p>
+    </header>
+
+    {%- comment -%} Rôles {%- endcomment -%}
+    <div>
+      <h2 class="text-3xl">Rôles de couleur</h2>
+      <p class="mt-2 text-muted">À utiliser en priorité dans les sections : <code>bg-page</code>, <code>text-heading</code>, <code>bg-action</code>…</p>
+      <div class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+        {%- for role in roles -%}
+          <div class="overflow-hidden rounded-card bg-surface shadow-card">
+            <div class="h-16 border-b border-line" style="background: var(--color-{{ role }})"></div>
+            <div class="p-3 text-xs">
+              <p class="font-semibold text-ink">{{ role }}</p>
+              <p class="text-muted" data-swatch="--color-{{ role }}"></p>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- comment -%} Palettes {%- endcomment -%}
+    <div>
+      <h2 class="text-3xl">Palettes</h2>
+      <div class="mt-6 space-y-6">
+        {%- for palette in palettes -%}
+          {%- liquid
+            case palette
+              when 'cream'
+                assign palette_steps = cream_steps
+              when 'ink'
+                assign palette_steps = ink_steps
+              else
+                assign palette_steps = steps
+            endcase
+          -%}
+          <div>
+            <h3 class="text-sm font-semibold uppercase tracking-wider">{{ palette }}</h3>
+            <div class="mt-2 grid grid-cols-5 gap-2 sm:grid-cols-11">
+              {%- for step in palette_steps -%}
+                <div>
+                  <div class="h-12 rounded-chip ring-1 ring-black/5" style="background: var(--color-{{ palette }}-{{ step }})"></div>
+                  <p class="mt-1 text-[11px] font-medium text-ink">{{ step }}</p>
+                  <p class="text-[11px] text-muted" data-swatch="--color-{{ palette }}-{{ step }}"></p>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- comment -%} Typographies {%- endcomment -%}
+    <div>
+      <h2 class="text-3xl">Typographies</h2>
+      <div class="mt-6 grid gap-6 lg:grid-cols-3">
+        <div class="panel">
+          <p class="text-xs font-semibold uppercase tracking-wider text-muted">font-display · Satisfy</p>
+          <p class="mt-4 font-display text-5xl text-heading">Nos nouveautés</p>
+          <p class="mt-4 text-sm text-muted">Titres h1 et h2. Jamais en gras, jamais pour un texte long.</p>
+        </div>
+        <div class="panel">
+          <p class="text-xs font-semibold uppercase tracking-wider text-muted">font-serif · Libre Caslon Text</p>
+          <p class="mt-4 font-serif text-3xl leading-tight text-heading">Puzzle à encastrer en bois</p>
+          <p class="mt-4 text-sm text-muted">Nom de l'article sur sa fiche produit.</p>
+        </div>
+        <div class="panel">
+          <p class="text-xs font-semibold uppercase tracking-wider text-muted">font-sans · Montserrat</p>
+          <p class="mt-4 text-base text-ink">
+            Notre ASBL vous propose le plus grand choix <strong>en seconde main de la naissance à 18 ans</strong>.
+          </p>
+          <p class="mt-4 text-sm text-muted">Texte courant, interface, boutons, prix (300 à 700).</p>
+        </div>
+      </div>
+      <div class="mt-6 panel space-y-3">
+        <h1 class="text-4xl">Titre h1 — text-4xl</h1>
+        <h2 class="text-3xl">Titre h2 — text-3xl</h2>
+        <h3 class="text-xl font-semibold">Titre h3 — text-xl semibold</h3>
+        <p class="text-base">Paragraphe — text-base</p>
+        <p class="text-sm text-muted">Texte secondaire — text-sm text-muted</p>
+        <p><a href="#" class="text-link underline hover:text-link-hover">Lien — text-link</a></p>
+      </div>
+    </div>
+
+    {%- comment -%} Boutons {%- endcomment -%}
+    <div>
+      <h2 class="text-3xl">Boutons</h2>
+      <div class="mt-6 flex flex-wrap items-center gap-4">
+        <button type="button" class="btn-cart">Dans mon panier</button>
+        <button type="button" class="btn-primary">Découvrir la boutique</button>
+        <button type="button" class="btn-secondary">Voir les catégories</button>
+        <button type="button" class="btn" disabled>Vendu</button>
+      </div>
+      <dl class="mt-4 grid gap-2 text-sm text-muted sm:grid-cols-2">
+        <div><dt class="inline font-semibold text-ink">.btn-cart</dt> <dd class="inline">ajouter au panier, commander</dd></div>
+        <div><dt class="inline font-semibold text-ink">.btn-primary</dt> <dd class="inline">appel à l'action principal d'une page</dd></div>
+        <div><dt class="inline font-semibold text-ink">.btn-secondary</dt> <dd class="inline">action secondaire, à côté d'un bouton principal</dd></div>
+        <div><dt class="inline font-semibold text-ink">.btn[disabled]</dt> <dd class="inline">article vendu, action indisponible</dd></div>
+      </dl>
+    </div>
+
+    {%- comment -%} Badges et pastilles {%- endcomment -%}
+    <div>
+      <h2 class="text-3xl">Badges et pastilles</h2>
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <span class="badge-brand">Neuf</span>
+        <span class="badge-promo">Promo</span>
+        <span class="badge-sold">Vendu</span>
+        <span class="badge-highlight">Dépôts sans rdv</span>
+      </div>
+      <div class="mt-6 flex flex-wrap items-center gap-2">
+        <a href="#" class="chip">2 ans</a>
+        <a href="#" class="chip-selected">3 ans</a>
+        <a href="#" class="chip">4 ans</a>
+        <a href="#" class="chip">Pulls, sweats et gilets</a>
+      </div>
+    </div>
+
+    {%- comment -%} Cartes et blocs {%- endcomment -%}
+    <div>
+      <h2 class="text-3xl">Cartes et blocs</h2>
+      <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="card-product group">
+          <div class="relative aspect-[3/4] bg-surface-alt">
+            <div class="absolute top-3 left-3 flex flex-col items-start gap-1.5">
+              <span class="badge-brand text-[10px] font-bold uppercase tracking-wider">Neuf</span>
+            </div>
+            <span class="price-tag absolute right-0 bottom-3">4,50 €</span>
+          </div>
+          <div class="p-4">
+            <p class="mb-1 text-xs font-medium uppercase tracking-wider text-brand-strong">Haba</p>
+            <h3 class="line-clamp-2 text-sm font-medium text-ink">Puzzle à boutons en bois chenille et pomme</h3>
+            <p class="mt-2 text-base font-bold text-price">4,50 €</p>
+            <button type="button" class="btn-cart mt-3 w-full py-2 text-xs">Dans mon panier</button>
+          </div>
+        </div>
+        <div class="space-y-6 sm:col-span-1 lg:col-span-3">
+          <div class="callout">
+            <p class="font-semibold text-heading">.callout</p>
+            <p class="mt-1 text-sm text-muted">Encart d'information (dépôts, horaires, annonces).</p>
+          </div>
+          <div class="panel">
+            <p class="font-semibold text-heading">.panel</p>
+            <p class="mt-1 text-sm text-muted">Bloc de contenu blanc (pages, formulaires).</p>
+          </div>
+          <div class="panel">
+            <label for="ds-field" class="mb-2 block text-sm font-semibold text-ink">.field</label>
+            <input id="ds-field" type="search" class="field" placeholder="Chercher un article en seconde main">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Rayons et ombres {%- endcomment -%}
+    <div>
+      <h2 class="text-3xl">Rayons et ombres</h2>
+      <div class="mt-6 grid grid-cols-2 gap-6 sm:grid-cols-4">
+        <div class="flex h-24 items-center justify-center rounded-chip bg-surface text-sm shadow-card">rounded-chip</div>
+        <div class="flex h-24 items-center justify-center rounded-card bg-surface text-sm shadow-card">rounded-card</div>
+        <div class="flex h-24 items-center justify-center rounded-tile bg-surface text-sm shadow-tile">rounded-tile</div>
+        <div class="flex h-24 items-center justify-center rounded-full bg-surface text-sm shadow-raised">rounded-full</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('[data-swatch]').forEach(function (el) {
+    el.textContent = getComputedStyle(document.documentElement).getPropertyValue(el.dataset.swatch).trim();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Design System",
+  "settings": []
+}
+{% endschema %}
