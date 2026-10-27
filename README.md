@@ -1,3 +1,11 @@
+# Petit Kiwi — thème Shopify (Dawn + Tailwind CSS v4)
+
+Thème en refonte pour www.petitkiwi.be. Son identité visuelle est décrite dans le **[Design System](docs/design-system.md)** : les tokens (couleurs, typographies, rayons, ombres) et les composants sont définis dans `assets/app-tailwind.css` et compilés dans `assets/app.css` (GitHub Action ou `npm run build:css`).
+
+> La suite de ce README est celui du starter Trellis d'origine. La section « Tailwind CSS » ci-dessous (préfixe `twcss-`, `tailwind.config.js`) ne s'applique plus.
+
+---
+
 Brought to you and maintained by [Trellis Commerce](https://trellis.co/) - A full-service eCommerce agency based in Boston, MA
 
 Latest merged code from [Dawn v15.0.1](https://github.com/Shopify/dawn/releases/tag/v15.0.1)

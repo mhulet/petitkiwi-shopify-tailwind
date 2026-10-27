@@ -1,3 +1,313 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/*
+ * Petit Kiwi — Design System (source Tailwind CSS v4)
+ *
+ * Ce fichier est la source unique des design tokens du thème.
+ * Il est compilé dans assets/app.css :
+ *   - automatiquement par la GitHub Action « Generate Tailwind CSS » à chaque push ;
+ *   - en local avec `npm run build:css` (ou `npm run watch:css`).
+ * Ne pas modifier assets/app.css à la main.
+ *
+ * Documentation : docs/design-system.md
+ * Aperçu vivant : modèle de page « page.design-system » (sections/design-system.liquid)
+ */
+
+@import 'tailwindcss' source(none);
+
+@source '../layout';
+@source '../sections';
+@source '../snippets';
+@source '../templates';
+
+/* ------------------------------------------------------------------
+ * 1. Tokens
+ * ------------------------------------------------------------------ */
+
+@theme static {
+  /* On repart d'une palette vide : seules les couleurs Petit Kiwi existent. */
+  --color-*: initial;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* Kiwi — vert sauge de la barre de navigation et du footer (couleur de marque) */
+  --color-kiwi-50: #f2f8f6;
+  --color-kiwi-100: #dcefe8;
+  --color-kiwi-200: #b5ddd1;
+  --color-kiwi-300: #9accbe;
+  --color-kiwi-400: #7eb7aa;
+  --color-kiwi-500: #65947d;
+  --color-kiwi-600: #4e7160;
+  --color-kiwi-700: #3d5a4d;
+  --color-kiwi-800: #2e443a;
+  --color-kiwi-900: #1f2e27;
+
+  /* Leaf — vert des boutons « dans mon panier » */
+  --color-leaf-50: #f0f8f0;
+  --color-leaf-100: #dcf0dc;
+  --color-leaf-200: #b9e1b9;
+  --color-leaf-300: #8ccd8c;
+  --color-leaf-400: #5cb85c;
+  --color-leaf-500: #47a447;
+  --color-leaf-600: #2f7d2f;
+  --color-leaf-700: #266326;
+  --color-leaf-800: #1e4d1e;
+  --color-leaf-900: #163816;
+
+  /* Lagoon — turquoise des grands boutons d'appel à l'action */
+  --color-lagoon-50: #effafa;
+  --color-lagoon-100: #d5f2f2;
+  --color-lagoon-200: #aee6e6;
+  --color-lagoon-300: #6fcfcf;
+  --color-lagoon-400: #3caeae;
+  --color-lagoon-500: #2f8f8f;
+  --color-lagoon-600: #257272;
+  --color-lagoon-700: #1d5a5a;
+  --color-lagoon-800: #164545;
+  --color-lagoon-900: #0f3030;
+
+  /* Raspberry — framboise (langue active, liste de souhaits, promos) */
+  --color-raspberry-50: #fcf1f6;
+  --color-raspberry-100: #f9dde9;
+  --color-raspberry-200: #f2bad3;
+  --color-raspberry-300: #e48bb4;
+  --color-raspberry-400: #cc5590;
+  --color-raspberry-500: #ad2e6e;
+  --color-raspberry-600: #961d5a;
+  --color-raspberry-700: #7a174a;
+  --color-raspberry-800: #5e1240;
+  --color-raspberry-900: #4a0b44;
+
+  /* Sun — jaune des bandeaux d'annonce et des surlignages */
+  --color-sun-50: #fefee8;
+  --color-sun-100: #fbfbc0;
+  --color-sun-200: #f7f781;
+  --color-sun-300: #ecec09;
+  --color-sun-400: #e0e064;
+  --color-sun-500: #c9c90a;
+  --color-sun-600: #a4a223;
+  --color-sun-700: #7d7c16;
+  --color-sun-800: #5d5d0a;
+  --color-sun-900: #3f3f07;
+
+  /* Sky — bleu des liens, des prix et des filtres */
+  --color-sky-50: #edf5fd;
+  --color-sky-100: #dbe8f5;
+  --color-sky-200: #c2e4f8;
+  --color-sky-300: #8cc4ea;
+  --color-sky-400: #4a9fd6;
+  --color-sky-500: #1779ba;
+  --color-sky-600: #336699;
+  --color-sky-700: #1f4f80;
+  --color-sky-800: #003366;
+  --color-sky-900: #022747;
+
+  /* Cream — fonds chaleureux (chair du kiwi) */
+  --color-cream-50: #fdfbf7;
+  --color-cream-100: #faf6ee;
+  --color-cream-200: #f7f2d5;
+  --color-cream-300: #efe6c4;
+  --color-cream-400: #e3d6a8;
+
+  /* Ink — neutres du texte et des bordures */
+  --color-ink-50: #f5f5f5;
+  --color-ink-100: #eeeeee;
+  --color-ink-200: #dddddd;
+  --color-ink-300: #cccccc;
+  --color-ink-400: #999999;
+  --color-ink-500: #767676;
+  --color-ink-600: #666666;
+  --color-ink-700: #4a4a4a;
+  --color-ink-800: #343434;
+  --color-ink-900: #222222;
+  --color-ink-950: #0a0a0a;
+
+  /* Rôles (à utiliser en priorité dans les sections) */
+  --color-page: var(--color-cream-100);
+  --color-surface: var(--color-white);
+  --color-surface-alt: var(--color-cream-200);
+  --color-ink: var(--color-ink-900);
+  --color-heading: var(--color-ink-800);
+  --color-muted: var(--color-ink-600);
+  --color-subtle: var(--color-ink-500);
+  --color-line: var(--color-ink-200);
+  --color-brand: var(--color-kiwi-400);
+  --color-brand-strong: var(--color-kiwi-600);
+  --color-brand-soft: var(--color-kiwi-100);
+  --color-action: var(--color-leaf-600);
+  --color-action-hover: var(--color-leaf-700);
+  --color-cta: var(--color-lagoon-600);
+  --color-cta-hover: var(--color-lagoon-700);
+  --color-link: var(--color-sky-600);
+  --color-link-hover: var(--color-sky-800);
+  --color-price: var(--color-sky-600);
+  --color-accent: var(--color-raspberry-500);
+  --color-highlight: var(--color-sun-200);
+
+  /* Typographies */
+  --font-sans: 'Montserrat', ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Satisfy', 'Libre Caslon Text', Georgia, cursive;
+  --font-serif: 'Libre Caslon Text', Georgia, 'Times New Roman', serif;
+
+  /* Rayons */
+  --radius-chip: 0.375rem;
+  --radius-card: 1rem;
+  --radius-tile: 1.5rem;
+
+  /* Ombres */
+  --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-raised: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-tile: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* Largeurs */
+  --container-page: 80rem;
+  --container-reading: 56.25rem;
+}
+
+/* ------------------------------------------------------------------
+ * 2. Base
+ * ------------------------------------------------------------------ */
+
+@layer base {
+  /* Tailwind v4 met les bordures en currentColor par défaut : on garde le gris du thème. */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-line);
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-page font-sans text-ink antialiased;
+  }
+
+  h1,
+  h2 {
+    @apply font-display font-normal text-heading;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-heading;
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    @apply bg-highlight text-ink;
+  }
+}
+
+/* ------------------------------------------------------------------
+ * 3. Composants
+ * ------------------------------------------------------------------ */
+
+/* Composants réutilisables : utilisables comme classes et avec @apply. */
+
+/* Boutons */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-x-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:bg-line disabled:text-muted;
+}
+
+@utility btn-primary {
+  @apply btn bg-cta text-white hover:bg-cta-hover focus-visible:outline-cta;
+}
+
+@utility btn-cart {
+  @apply btn bg-action text-white hover:bg-action-hover focus-visible:outline-action;
+}
+
+@utility btn-secondary {
+  @apply btn border-2 border-cta bg-surface text-cta hover:bg-lagoon-50 focus-visible:outline-cta;
+}
+
+/* Badges */
+@utility badge {
+  @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+}
+
+@utility badge-brand {
+  @apply badge bg-brand-soft text-brand-strong;
+}
+
+@utility badge-promo {
+  @apply badge bg-accent text-white;
+}
+
+@utility badge-sold {
+  @apply badge bg-heading text-white;
+}
+
+@utility badge-highlight {
+  @apply badge bg-highlight text-sun-800;
+}
+
+/* Pastilles de filtre (taille, type…) */
+@utility chip {
+  @apply inline-block rounded-chip border-r-2 border-b-2 border-sky-100 bg-sky-50 px-4 py-1 text-sm text-link transition-colors hover:border-sun-600 hover:bg-sun-400 hover:text-sun-800;
+}
+
+@utility chip-selected {
+  @apply inline-block rounded-chip border-r-2 border-b-2 border-sky-800 bg-link px-4 py-1 text-sm font-semibold text-white;
+}
+
+/* Cartes */
+@utility card-product {
+  @apply relative overflow-hidden rounded-card bg-surface shadow-card transition-shadow duration-300 hover:shadow-raised;
+}
+
+@utility price-tag {
+  @apply rounded-l-lg bg-white/75 px-2 py-1 text-sm font-semibold text-price;
+}
+
+/* Blocs de contenu */
+@utility panel {
+  @apply rounded-card bg-surface p-8 shadow-raised;
+}
+
+@utility callout {
+  @apply rounded-card bg-surface-alt px-8 py-4;
+}
+
+@utility section-padding {
+  @apply py-12 sm:py-16 lg:py-20;
+}
+
+/* Champs */
+@utility field {
+  @apply w-full rounded-full border border-line bg-surface px-4 py-3 text-sm text-ink placeholder:text-subtle focus:border-brand-strong focus:ring-2 focus:ring-brand/30 focus:outline-none;
+}
+
+@layer components {
+  /* Texte riche (descriptions produit, pages) */
+  .rte {
+    @apply text-ink;
+  }
+  .rte > * + * {
+    @apply mt-4;
+  }
+  .rte h2,
+  .rte h3 {
+    @apply font-display text-heading;
+  }
+  .rte a {
+    @apply text-link underline hover:text-link-hover;
+  }
+  .rte ul {
+    @apply list-disc pl-5;
+  }
+  .rte ol {
+    @apply list-decimal pl-5;
+  }
+}

@@ -13,19 +13,19 @@
   endif
 -%}
 
-<section class="section-padding bg-cream">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<section class="section-padding bg-page">
+  <div class="mx-auto max-w-page px-4 sm:px-6 lg:px-8">
 
     {%- comment -%} Breadcrumb {%- endcomment -%}
     <nav class="mb-8" aria-label="Fil d'Ariane">
-      <ol class="flex items-center gap-x-2 text-sm text-brown-400">
-        <li><a href="/" class="hover:text-kiwi-600 transition-colors">Accueil</a></li>
+      <ol class="flex items-center gap-x-2 text-sm text-muted">
+        <li><a href="/" class="hover:text-brand-strong transition-colors">Accueil</a></li>
         {%- if collection -%}
           <li><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg></li>
-          <li><a href="{{ collection.url }}" class="hover:text-kiwi-600 transition-colors">{{ collection.title }}</a></li>
+          <li><a href="{{ collection.url }}" class="hover:text-brand-strong transition-colors">{{ collection.title }}</a></li>
         {%- endif -%}
         <li><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg></li>
-        <li class="text-brown-700 font-medium truncate max-w-[200px]">{{ product.title }}</li>
+        <li class="text-ink font-medium truncate max-w-[200px]">{{ product.title }}</li>
       </ol>
     </nav>
 
@@ -34,7 +34,7 @@
       {%- comment -%} ===== IMAGE GALLERY ===== {%- endcomment -%}
       <div x-data="{ activeImage: 0 }" class="sticky top-24">
         {%- comment -%} Main image {%- endcomment -%}
-        <div class="aspect-[3/4] overflow-hidden rounded-2xl bg-white">
+        <div class="aspect-[3/4] overflow-hidden rounded-card bg-white">
           {%- for media in product.media -%}
             <img
               x-show="activeImage === {{ forloop.index0 }}"
@@ -60,7 +60,7 @@
               <button
                 @click="activeImage = {{ forloop.index0 }}"
                 class="aspect-square overflow-hidden rounded-xl border-2 transition-colors"
-                :class="activeImage === {{ forloop.index0 }} ? 'border-kiwi' : 'border-transparent hover:border-brown-200'"
+                :class="activeImage === {{ forloop.index0 }} ? 'border-brand-strong' : 'border-transparent hover:border-line'"
               >
                 <img
                   src="{{ media | image_url: width: 150 }}"
@@ -80,19 +80,19 @@
       <div class="mt-8 lg:mt-0">
         {%- comment -%} Vendor {%- endcomment -%}
         {%- if product.vendor != blank -%}
-          <p class="text-sm font-semibold uppercase tracking-wider text-kiwi-600 mb-2">{{ product.vendor }}</p>
+          <p class="text-sm font-semibold uppercase tracking-wider text-brand-strong mb-2">{{ product.vendor }}</p>
         {%- endif -%}
 
         {%- comment -%} Title {%- endcomment -%}
-        <h1 class="text-2xl sm:text-3xl font-display text-brown">{{ product.title }}</h1>
+        <h1 class="text-2xl sm:text-3xl font-serif text-heading leading-tight">{{ product.title }}</h1>
 
         {%- comment -%} Price {%- endcomment -%}
         <div class="mt-4 flex items-center gap-x-3">
-          <span class="text-2xl font-bold text-brown">{{ price | money }}</span>
+          <span class="text-2xl font-bold text-price">{{ price | money }}</span>
           {%- if on_sale -%}
-            <span class="text-lg text-brown-300 line-through">{{ compare_price | money }}</span>
+            <span class="text-lg text-subtle line-through">{{ compare_price | money }}</span>
             {%- assign discount_pct = compare_price | minus: price | times: 100.0 | divided_by: compare_price | round -%}
-            <span class="badge bg-terra/10 text-terra font-bold">-{{ discount_pct }}%</span>
+            <span class="badge bg-raspberry-50 text-accent font-bold">-{{ discount_pct }}%</span>
           {%- endif -%}
         </div>
 
@@ -101,7 +101,7 @@
           <div class="mt-4 flex flex-wrap gap-2">
             {%- for tag in product.tags limit: 5 -%}
               {%- unless tag contains '_' -%}
-                <span class="badge bg-cream-300 text-brown-500">{{ tag }}</span>
+                <span class="badge bg-surface-alt text-muted">{{ tag }}</span>
               {%- endunless -%}
             {%- endfor -%}
           </div>
@@ -115,7 +115,7 @@
           {%- unless product.has_only_default_variant -%}
             {%- for option in product.options_with_values -%}
               <div class="mb-6">
-                <label class="block text-sm font-semibold text-brown-700 mb-3">{{ option.name }}</label>
+                <label class="block text-sm font-semibold text-ink mb-3">{{ option.name }}</label>
                 <div class="flex flex-wrap gap-2">
                   {%- for value in option.values -%}
                     {%- assign option_idx = 'option' | append: option.position -%}
@@ -128,7 +128,7 @@
                                params.set('{{ option.name }}', this.value);
                                window.location.search = params.toString();
                              ">
-                      <span class="block rounded-full border-2 border-brown-200 px-4 py-2 text-sm font-medium text-brown-700 peer-checked:border-kiwi peer-checked:bg-kiwi/10 peer-checked:text-kiwi-700 hover:border-kiwi/50 transition-colors">
+                      <span class="block rounded-full border-2 border-line px-4 py-2 text-sm font-medium text-ink peer-checked:border-brand-strong peer-checked:bg-brand-soft peer-checked:text-brand-strong hover:border-brand transition-colors">
                         {{ value }}
                       </span>
                     </label>
@@ -140,17 +140,17 @@
 
           {%- comment -%} Quantity {%- endcomment -%}
           <div class="mb-6">
-            <label for="Quantity" class="block text-sm font-semibold text-brown-700 mb-3">Quantit&eacute;</label>
-            <div class="inline-flex items-center rounded-full border border-brown-200 bg-white">
-              <button type="button" class="px-3 py-2 text-brown-400 hover:text-brown-700"
+            <label for="Quantity" class="block text-sm font-semibold text-ink mb-3">Quantit&eacute;</label>
+            <div class="inline-flex items-center rounded-full border border-line bg-white">
+              <button type="button" class="px-3 py-2 text-muted hover:text-ink"
                       onclick="var q=document.getElementById('Quantity');q.value=Math.max(1,parseInt(q.value)-1);">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
                 </svg>
               </button>
               <input type="number" id="Quantity" name="quantity" value="1" min="1"
-                     class="w-12 text-center border-0 text-sm font-medium text-brown-700 focus:ring-0 bg-transparent">
-              <button type="button" class="px-3 py-2 text-brown-400 hover:text-brown-700"
+                     class="w-12 text-center border-0 text-sm font-medium text-ink focus:ring-0 bg-transparent">
+              <button type="button" class="px-3 py-2 text-muted hover:text-ink"
                       onclick="var q=document.getElementById('Quantity');q.value=parseInt(q.value)+1;">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -161,14 +161,14 @@
 
           {%- comment -%} Add to cart button {%- endcomment -%}
           {%- if product.available -%}
-            <button type="submit" class="btn-primary w-full text-base py-4">
+            <button type="submit" class="btn-cart w-full text-base py-4">
               <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
               </svg>
               Ajouter au panier
             </button>
           {%- else -%}
-            <button type="button" disabled class="w-full rounded-full bg-brown-200 py-4 text-base font-semibold text-brown-400 cursor-not-allowed">
+            <button type="button" disabled class="btn w-full text-base py-4">
               Vendu
             </button>
           {%- endif -%}
@@ -177,36 +177,36 @@
         {%- comment -%} Trust indicators {%- endcomment -%}
         <div class="mt-8 grid grid-cols-3 gap-4">
           <div class="text-center">
-            <div class="mx-auto w-10 h-10 rounded-full bg-kiwi/10 flex items-center justify-center mb-2">
-              <svg class="h-5 w-5 text-kiwi-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <div class="mx-auto w-10 h-10 rounded-full bg-brand-soft flex items-center justify-center mb-2">
+              <svg class="h-5 w-5 text-brand-strong" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
               </svg>
             </div>
-            <p class="text-xs font-medium text-brown-500">Qualit&eacute; v&eacute;rifi&eacute;e</p>
+            <p class="text-xs font-medium text-muted">Qualit&eacute; v&eacute;rifi&eacute;e</p>
           </div>
           <div class="text-center">
-            <div class="mx-auto w-10 h-10 rounded-full bg-kiwi/10 flex items-center justify-center mb-2">
-              <svg class="h-5 w-5 text-kiwi-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <div class="mx-auto w-10 h-10 rounded-full bg-brand-soft flex items-center justify-center mb-2">
+              <svg class="h-5 w-5 text-brand-strong" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0H6.375c-.621 0-1.125-.504-1.125-1.125V11.25" />
               </svg>
             </div>
-            <p class="text-xs font-medium text-brown-500">Livraison rapide</p>
+            <p class="text-xs font-medium text-muted">Livraison rapide</p>
           </div>
           <div class="text-center">
-            <div class="mx-auto w-10 h-10 rounded-full bg-kiwi/10 flex items-center justify-center mb-2">
-              <svg class="h-5 w-5 text-kiwi-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <div class="mx-auto w-10 h-10 rounded-full bg-brand-soft flex items-center justify-center mb-2">
+              <svg class="h-5 w-5 text-brand-strong" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
               </svg>
             </div>
-            <p class="text-xs font-medium text-brown-500">Paiement s&eacute;curis&eacute;</p>
+            <p class="text-xs font-medium text-muted">Paiement s&eacute;curis&eacute;</p>
           </div>
         </div>
 
         {%- comment -%} Description {%- endcomment -%}
         {%- if product.description != blank -%}
-          <div class="mt-10 border-t border-brown-200/30 pt-8">
-            <h2 class="text-lg font-display text-brown mb-4">Description</h2>
-            <div class="prose prose-sm text-brown-500 max-w-none prose-headings:text-brown prose-headings:font-display prose-a:text-kiwi-600">
+          <div class="mt-10 border-t border-line pt-8">
+            <h2 class="text-2xl font-display text-heading mb-4">Description</h2>
+            <div class="rte text-sm">
               {{ product.description }}
             </div>
           </div>
